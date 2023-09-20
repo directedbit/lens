@@ -7,3 +7,4 @@ build/
 # If anyone runs "go build .", ignore the resulting binary.
 lens
 lens.exe
+__debug_bin
