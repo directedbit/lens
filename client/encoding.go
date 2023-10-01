@@ -6,9 +6,15 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"github.com/cosmos/cosmos-sdk/x/auth/tx"
+	authTx "github.com/cosmos/cosmos-sdk/x/auth/tx"
+	distTypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 
 	ethermintcodecs "github.com/strangelove-ventures/lens/client/codecs/ethermint"
+	//gravitycodecs "github.com/strangelove-ventures/lens/client/codecs/gravity"
+
+	//gravitycodecs "gravitycodecs/codecs/mygravitycodecs"
+	gravitycodecs "github.com/directedbit/gravitycodecs"
+
 	injectivecodecs "github.com/strangelove-ventures/lens/client/codecs/injective"
 )
 
@@ -26,6 +32,12 @@ func MakeCodec(moduleBasics []module.AppModuleBasic, extraCodecs []string) Codec
 	std.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	modBasic.RegisterLegacyAminoCodec(encodingConfig.Amino)
 	modBasic.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	//for sommelier
+	distTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	//gravity
+	//gravitycodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	gravitycodecs.HelloWorld()
+
 	for _, c := range extraCodecs {
 		switch c {
 		case "ethermint":
@@ -48,7 +60,7 @@ func MakeCodecConfig() Codec {
 	return Codec{
 		InterfaceRegistry: interfaceRegistry,
 		Marshaler:         marshaler,
-		TxConfig:          tx.NewTxConfig(marshaler, tx.DefaultSignModes),
+		TxConfig:          authTx.NewTxConfig(marshaler, authTx.DefaultSignModes),
 		Amino:             codec.NewLegacyAmino(),
 	}
 }
