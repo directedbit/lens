@@ -10,7 +10,7 @@ import (
 	distTypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 
 	ethermintcodecs "github.com/strangelove-ventures/lens/client/codecs/ethermint"
-	//gravitycodecs "github.com/strangelove-ventures/lens/client/codecs/gravity"
+	gravitycodecs "github.com/strangelove-ventures/lens/client/codecs/gravity"
 
 	//gravitycodecs "gravitycodecs/codecs/mygravitycodecs"
 	//gravitycodecs "github.com/directedbit/gravitycodecs"
@@ -36,7 +36,7 @@ func MakeCodec(moduleBasics []module.AppModuleBasic, extraCodecs []string) Codec
 	//for sommelier
 	distTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	//gravity
-	//gravitycodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	gravitycodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	//gravitycodecs.HelloWorld()
 
 	for _, c := range extraCodecs {

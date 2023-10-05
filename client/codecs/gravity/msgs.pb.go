@@ -2,8 +2,9 @@ package gravity
 
 import (
 	"fmt"
-	types1 "gravitycosmossdk/codec/types"
 	"io"
+
+	types1 "github.com/cosmos/cosmos-sdk/codec/types"
 
 	math_bits "math/bits"
 
