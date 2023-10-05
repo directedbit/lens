@@ -5,3 +5,5 @@ lint:
     - cosmos
     - cosmos_proto
     - gogoproto
+    - google
+    - gravity

@@ -13,7 +13,8 @@ import (
 	//gravitycodecs "github.com/strangelove-ventures/lens/client/codecs/gravity"
 
 	//gravitycodecs "gravitycodecs/codecs/mygravitycodecs"
-	gravitycodecs "github.com/directedbit/gravitycodecs"
+	//gravitycodecs "github.com/directedbit/gravitycodecs"
+	//gravitycodecs "github.com/peggyjv/gravity-bridge/module/v4/x/gravity/types"
 
 	injectivecodecs "github.com/strangelove-ventures/lens/client/codecs/injective"
 )
@@ -36,7 +37,7 @@ func MakeCodec(moduleBasics []module.AppModuleBasic, extraCodecs []string) Codec
 	distTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	//gravity
 	//gravitycodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
-	gravitycodecs.HelloWorld()
+	//gravitycodecs.HelloWorld()
 
 	for _, c := range extraCodecs {
 		switch c {
