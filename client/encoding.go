@@ -7,10 +7,18 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authTx "github.com/cosmos/cosmos-sdk/x/auth/tx"
+	authz "github.com/cosmos/cosmos-sdk/x/authz"
+	bankTypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	distTypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
+	govTypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
+	stakeTypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	upgradeTypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
+	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 
 	ethermintcodecs "github.com/strangelove-ventures/lens/client/codecs/ethermint"
 	gravitycodecs "github.com/strangelove-ventures/lens/client/codecs/gravity"
+
+	//sommeliercodecs "github.com/peggyjv/sommelier/v6/x/cork/keeper"
 
 	//gravitycodecs "gravitycodecs/codecs/mygravitycodecs"
 	//gravitycodecs "github.com/directedbit/gravitycodecs"
@@ -33,24 +41,24 @@ func MakeCodec(moduleBasics []module.AppModuleBasic, extraCodecs []string) Codec
 	std.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	modBasic.RegisterLegacyAminoCodec(encodingConfig.Amino)
 	modBasic.RegisterInterfaces(encodingConfig.InterfaceRegistry)
-	//for sommelier
+	//cosmos types..
 	distTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	bankTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	stakeTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	transfertypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	authz.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	govTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	upgradeTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	//gravity
 	gravitycodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	//gravitycodecs.HelloWorld()
 
-	for _, c := range extraCodecs {
-		switch c {
-		case "ethermint":
-			ethermintcodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
-			encodingConfig.Amino.RegisterConcrete(&ethermintcodecs.PubKey{}, ethermintcodecs.PubKeyName, nil)
-			encodingConfig.Amino.RegisterConcrete(&ethermintcodecs.PrivKey{}, ethermintcodecs.PrivKeyName, nil)
-		case "injective":
-			injectivecodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
-			encodingConfig.Amino.RegisterConcrete(&injectivecodecs.PubKey{}, injectivecodecs.PubKeyName, nil)
-			encodingConfig.Amino.RegisterConcrete(&injectivecodecs.PrivKey{}, injectivecodecs.PrivKeyName, nil)
-		}
-	}
+	ethermintcodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	encodingConfig.Amino.RegisterConcrete(&ethermintcodecs.PubKey{}, ethermintcodecs.PubKeyName, nil)
+	encodingConfig.Amino.RegisterConcrete(&ethermintcodecs.PrivKey{}, ethermintcodecs.PrivKeyName, nil)
+	injectivecodecs.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	encodingConfig.Amino.RegisterConcrete(&injectivecodecs.PubKey{}, injectivecodecs.PubKeyName, nil)
+	encodingConfig.Amino.RegisterConcrete(&injectivecodecs.PrivKey{}, injectivecodecs.PrivKeyName, nil)
 
 	return encodingConfig
 }

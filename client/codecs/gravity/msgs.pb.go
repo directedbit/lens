@@ -115,8 +115,12 @@ func encodeVarintMsgs(dAtA []byte, offset int, v uint64) int {
 	return base
 }
 
-// MsgSubmitEthereumTxConfirmation submits an ethereum signature for a given
-// validator
+func init() {
+	//proto.RegisterType((*MsgSubmitEthereumTxConfirmation)(nil), "gravity.v1.MsgSubmitEthereumTxConfirmation")
+	proto.RegisterType((*MsgSubmitEthereumTxConfirmation)(nil), "gravity.v1.MsgSubmitEthereumTxConfirmation")
+	proto.RegisterType((*SignerSetTxConfirmation)(nil), "gravity.v1.SignerSetTxConfirmation")
+}
+
 func init() { proto.RegisterFile("gravity/v1/msgs.proto", fileDescriptor_2f8523f2f6feb451) }
 
 var fileDescriptor_2f8523f2f6feb451 = []byte{
@@ -204,6 +208,8 @@ var fileDescriptor_2f8523f2f6feb451 = []byte{
 	0x0e, 0x00, 0x00,
 }
 
+// MsgSubmitEthereumTxConfirmation submits an ethereum signature for a given
+// validator
 type MsgSubmitEthereumTxConfirmation struct {
 	// TODO: can we make this take an array?
 	Confirmation *types1.Any `protobuf:"bytes,1,opt,name=confirmation,proto3" json:"confirmation,omitempty"`
@@ -362,6 +368,11 @@ func (*MsgSubmitEthereumTxConfirmation) ProtoMessage()    {}
 func (*MsgSubmitEthereumTxConfirmation) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2f8523f2f6feb451, []int{4}
 }
+
+func (m *MsgSubmitEthereumTxConfirmation) XXX_MessageName() string {
+	return "gravity.v1.MsgSubmitEthereumTxConfirmation"
+}
+
 func (m *MsgSubmitEthereumTxConfirmation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
@@ -404,4 +415,254 @@ func (m *MsgSubmitEthereumTxConfirmation) Size() (n int) {
 		n += 1 + l + sovMsgs(uint64(l))
 	}
 	return n
+}
+
+// SignerSetTxConfirmation is a signature on behalf of a validator for a
+// SignerSetTx
+type SignerSetTxConfirmation struct {
+	SignerSetNonce uint64 `protobuf:"varint,1,opt,name=signer_set_nonce,json=signerSetNonce,proto3" json:"signer_set_nonce,omitempty"`
+	EthereumSigner string `protobuf:"bytes,2,opt,name=ethereum_signer,json=ethereumSigner,proto3" json:"ethereum_signer,omitempty"`
+	Signature      []byte `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
+}
+
+func (m *SignerSetTxConfirmation) Reset()         { *m = SignerSetTxConfirmation{} }
+func (m *SignerSetTxConfirmation) String() string { return proto.CompactTextString(m) }
+func (*SignerSetTxConfirmation) ProtoMessage()    {}
+func (*SignerSetTxConfirmation) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2f8523f2f6feb451, []int{7}
+}
+
+func (m *SignerSetTxConfirmation) XXX_MessageName() string {
+	return "gravity.v1.SignerSetTxConfirmation"
+}
+
+func (m *SignerSetTxConfirmation) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SignerSetTxConfirmation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SignerSetTxConfirmation.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SignerSetTxConfirmation) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SignerSetTxConfirmation.Merge(m, src)
+}
+func (m *SignerSetTxConfirmation) XXX_Size() int {
+	return m.Size()
+}
+func (m *SignerSetTxConfirmation) XXX_DiscardUnknown() {
+	xxx_messageInfo_SignerSetTxConfirmation.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SignerSetTxConfirmation proto.InternalMessageInfo
+
+func (m *SignerSetTxConfirmation) GetSignerSetNonce() uint64 {
+	if m != nil {
+		return m.SignerSetNonce
+	}
+	return 0
+}
+
+func (m *SignerSetTxConfirmation) GetEthereumSigner() string {
+	if m != nil {
+		return m.EthereumSigner
+	}
+	return ""
+}
+
+func (m *SignerSetTxConfirmation) GetSignature() []byte {
+	if m != nil {
+		return m.Signature
+	}
+	return nil
+}
+
+func (m *SignerSetTxConfirmation) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SignerSetNonce != 0 {
+		n += 1 + sovMsgs(uint64(m.SignerSetNonce))
+	}
+	l = len(m.EthereumSigner)
+	if l > 0 {
+		n += 1 + l + sovMsgs(uint64(l))
+	}
+	l = len(m.Signature)
+	if l > 0 {
+		n += 1 + l + sovMsgs(uint64(l))
+	}
+	return n
+}
+
+func (m *SignerSetTxConfirmation) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMsgs
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SignerSetTxConfirmation: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SignerSetTxConfirmation: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SignerSetNonce", wireType)
+			}
+			m.SignerSetNonce = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMsgs
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SignerSetNonce |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EthereumSigner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMsgs
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMsgs
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMsgs
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EthereumSigner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Signature", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMsgs
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthMsgs
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMsgs
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Signature = append(m.Signature[:0], dAtA[iNdEx:postIndex]...)
+			if m.Signature == nil {
+				m.Signature = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMsgs(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMsgs
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+
+func (m *SignerSetTxConfirmation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Signature) > 0 {
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
+		i = encodeVarintMsgs(dAtA, i, uint64(len(m.Signature)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.EthereumSigner) > 0 {
+		i -= len(m.EthereumSigner)
+		copy(dAtA[i:], m.EthereumSigner)
+		i = encodeVarintMsgs(dAtA, i, uint64(len(m.EthereumSigner)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.SignerSetNonce != 0 {
+		i = encodeVarintMsgs(dAtA, i, uint64(m.SignerSetNonce))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }

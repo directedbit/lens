@@ -13,9 +13,18 @@ import (
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	//gravity.v1.MsgSubmitEthereumTxConfirmation
 	//didn't work :
-	registry.RegisterInterface("gravity.v1.MsgSubmitEthereumTxConfirmation", (*sdk.Msg)(nil))
+	//registry.RegisterInterface("gravity.v1.MsgSubmitEthereumTxConfirmation", (*sdk.Msg)(nil))
 	//from the project
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSubmitEthereumTxConfirmation{},
+		//&MsgSubmitEthereumEvent{},
+	)
+
+	registry.RegisterInterface(
+		"gravity.v1.EthereumSignature",
+		(*EthereumTxConfirmation)(nil),
+		//&BatchTxConfirmation{},
+		//&ContractCallTxConfirmation{},
+		&SignerSetTxConfirmation{},
 	)
 }
