@@ -44,7 +44,6 @@ import (
 	"github.com/strangelove-ventures/lens/client"
 	"github.com/strangelove-ventures/lens/client/chain_registry"
 	"github.com/strangelove-ventures/lens/client/codecs/gravity"
-	"github.com/strangelove-ventures/lens/cmd"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/util"
 	"github.com/xitongsys/parquet-go-source/local"
@@ -686,7 +685,5 @@ func main() {
 	// run the indexer
 	//start_index := 1936000
 	indexFromRPC(logger, chainClient)
-
-	cmd.Execute()
 
 }
